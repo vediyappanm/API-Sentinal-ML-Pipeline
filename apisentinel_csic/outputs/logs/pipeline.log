@@ -1,0 +1,707 @@
+2026-03-11 12:26:16,288 [INFO] Dataset:    ..\csic_database.csv
+2026-03-11 12:26:16,290 [INFO] Output dir: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs
+2026-03-11 12:26:16,290 [INFO] Start step: 1
+2026-03-11 12:26:27,495 [INFO] STEP 01 — Raw Data Ingestion
+2026-03-11 12:26:27,500 [INFO] Loading dataset: ..\csic_database.csv
+2026-03-11 12:26:27,501 [INFO] File size: 28.2 MB
+2026-03-11 12:26:27,996 [INFO] Loaded with encoding: utf-8
+2026-03-11 12:26:27,996 [INFO] Raw shape: (61065, 17)
+2026-03-11 12:26:27,997 [INFO] Raw columns: ['Unnamed: 0', 'Method', 'User-Agent', 'Pragma', 'Cache-Control', 'Accept', 'Accept-encoding', 'Accept-charset', 'language', 'host', 'cookie', 'content-type', 'connection', 'lenght', 'content', 'classification', 'URL']
+2026-03-11 12:26:27,999 [INFO] Raw dtypes:
+Unnamed: 0         object
+Method             object
+User-Agent         object
+Pragma             object
+Cache-Control      object
+Accept             object
+Accept-encoding    object
+Accept-charset     object
+language           object
+host               object
+cookie             object
+content-type       object
+connection         object
+lenght             object
+content            object
+classification      int64
+URL                object
+dtype: object
+2026-03-11 12:26:28,000 [INFO] Resolving column names...
+2026-03-11 12:26:28,007 [INFO]   Mapped column 'content' -> 'Payload'
+2026-03-11 12:26:28,008 [INFO]   Mapped column 'classification' -> 'label'
+2026-03-11 12:26:28,009 [INFO]   Mapped column 'lenght' -> 'content-length'
+2026-03-11 12:26:28,009 [INFO] 
+============================================================
+2026-03-11 12:26:28,009 [INFO] DATASET STATS AFTER COLUMN RESOLUTION
+2026-03-11 12:26:28,009 [INFO] ============================================================
+2026-03-11 12:26:28,010 [INFO] Total rows:  61,065
+2026-03-11 12:26:28,010 [INFO] Total cols:  17
+2026-03-11 12:26:28,014 [INFO] Label distribution:
+label
+0    36000
+1    25065
+Name: count, dtype: int64
+2026-03-11 12:26:28,019 [INFO] Method distribution:
+Method
+GET     43088
+POST    17580
+PUT       397
+Name: count, dtype: int64
+2026-03-11 12:26:28,060 [INFO] Null values per column:
+Accept              397
+content-type      43088
+content-length    43088
+Payload           43088
+dtype: int64
+2026-03-11 12:26:28,067 [INFO] 
+Sample rows:
+  Unnamed: 0 Method                                                               User-Agent    Pragma Cache-Control                                                                                               Accept                   Accept-encoding               Accept-charset language            host                                       cookie                       content-type         connection      content-length                                                               Payload  label                                                                                                                             URL
+0     Normal    GET  Mozilla/5.0 (compatible; Konqueror/3.5; Linux) KHTML/3.5.8 (like Gecko)  no-cache      no-cache  text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5  x-gzip, x-deflate, gzip, deflate  utf-8, utf-8;q=0.5, *;q=0.5       en  localhost:8080  JSESSIONID=1F767F17239C9B670A39E9B10C3825F4                                NaN              close                 NaN                                                                   NaN      0                                                                                http://localhost:8080/tienda1/index.jsp HTTP/1.1
+1     Normal    GET  Mozilla/5.0 (compatible; Konqueror/3.5; Linux) KHTML/3.5.8 (like Gecko)  no-cache      no-cache  text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5  x-gzip, x-deflate, gzip, deflate  utf-8, utf-8;q=0.5, *;q=0.5       en  localhost:8080  JSESSIONID=81761ACA043B0E6014CA42A4BCD06AB5                                NaN              close                 NaN                                                                   NaN      0  http://localhost:8080/tienda1/publico/anadir.jsp?id=3&nombre=Vino+Rioja&precio=100&cantidad=55&B1=A%F1adir+al+carrito HTTP/1.1
+2     Normal   POST  Mozilla/5.0 (compatible; Konqueror/3.5; Linux) KHTML/3.5.8 (like Gecko)  no-cache      no-cache  text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5  x-gzip, x-deflate, gzip, deflate  utf-8, utf-8;q=0.5, *;q=0.5       en  localhost:8080  JSESSIONID=933185092E0B668B90676E0A2B0767AF  application/x-www-form-urlencoded  Connection: close  Content-Length: 68  id=3&nombre=Vino+Rioja&precio=100&cantidad=55&B1=A%F1adir+al+carrito      0                                                                       http://localhost:8080/tienda1/publico/anadir.jsp HTTP/1.1
+2026-03-11 12:26:28,368 [INFO] 
+Saved raw parquet: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\01_raw.parquet
+2026-03-11 12:26:28,368 [INFO] File size: 3680.9 KB
+2026-03-11 12:26:28,375 [INFO] STEP 02 — Data Cleaning
+2026-03-11 12:26:28,378 [INFO] Loading: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\01_raw.parquet
+2026-03-11 12:26:28,615 [INFO] Starting clean. Rows: 61,065
+2026-03-11 12:26:29,036 [INFO] Normalizing labels...
+2026-03-11 12:26:29,049 [INFO] Label distribution after normalization:
+  0=normal: 36,000
+  1=attack: 25,065
+2026-03-11 12:26:29,083 [INFO]   Filled 43,088 nulls in 'Payload' with ''
+2026-03-11 12:26:29,102 [INFO]   Filled 43,088 nulls in 'content-type' with ''
+2026-03-11 12:26:29,117 [INFO]   Filled 43,088 nulls in 'content-length' with '0'
+2026-03-11 12:26:29,236 [INFO] Removed 35,457 duplicates
+2026-03-11 12:26:29,328 [WARNING] Dropping 54 conflicting label rows (CSIC v01 noise)
+2026-03-11 12:26:29,375 [INFO] Root/empty URL requests: 0 (kept)
+2026-03-11 12:26:29,375 [INFO] 
+============================================================
+2026-03-11 12:26:29,375 [INFO] CLEAN STATS
+2026-03-11 12:26:29,376 [INFO] ============================================================
+2026-03-11 12:26:29,376 [INFO] Original rows:  61,065
+2026-03-11 12:26:29,377 [INFO] Final rows:     25,554
+2026-03-11 12:26:29,377 [INFO] Removed total:  35,511 (58.2%)
+2026-03-11 12:26:29,378 [INFO] Normal:   9,617
+2026-03-11 12:26:29,379 [INFO] Anomalous:15,937
+2026-03-11 12:26:29,382 [INFO] Method breakdown:
+Method
+GET     13490
+POST    11826
+PUT       238
+2026-03-11 12:26:29,502 [INFO] 
+Saved clean parquet: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\02_clean.parquet
+2026-03-11 12:26:29,515 [INFO] STEP 03 — Feature Extraction (50)
+2026-03-11 12:26:29,518 [INFO] Loading: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\02_clean.parquet
+2026-03-11 12:26:29,586 [INFO] Extracting features for 25,554 rows...
+2026-03-11 12:26:29,586 [INFO] Note: Groups 6+7 set to training defaults (zeros/medians)
+2026-03-11 12:26:29,587 [INFO]       These are populated from Redis at production inference time
+2026-03-11 12:26:35,044 [INFO] 
+Feature stats (first 10):
+       url_length  path_length  path_depth  query_string_length  param_count  url_entropy  path_entropy  query_entropy  special_char_count  encoded_char_count
+count   25554.000    25554.000   25554.000            25554.000    25554.000    25554.000     25554.000      25554.000           25554.000           25554.000
+mean      127.270       33.707       3.562               72.096        3.575        4.769         4.165          2.252               2.000               1.806
+std       102.528        6.691       0.600              105.620        4.873        0.281         0.185          2.428               0.019               5.707
+min        31.000        1.000       1.000                0.000        0.000        3.803        -0.000          0.000               2.000               0.000
+25%        58.000       28.000       3.000                0.000        0.000        4.519         4.018          0.000               2.000               0.000
+50%        66.000       35.000       4.000                0.000        0.000        4.591         4.175          0.000               2.000               0.000
+75%       132.000       37.000       4.000               83.000        5.000        5.015         4.296          4.820               2.000               2.000
+max       895.000       75.000       7.000              845.000       13.000        5.452         4.932          5.392               5.000             114.000
+2026-03-11 12:26:35,054 [INFO] 
+Feature null counts: 0
+2026-03-11 12:26:35,064 [INFO] 
+Keyword score comparison (attack vs normal):
+2026-03-11 12:26:35,065 [INFO]   sqli_keyword_score: attack=0.011, normal=0.000
+2026-03-11 12:26:35,065 [INFO]   xss_keyword_score: attack=0.097, normal=0.000
+2026-03-11 12:26:35,066 [INFO]   path_traversal_score: attack=0.004, normal=0.000
+2026-03-11 12:26:35,142 [INFO] 
+Saved features parquet: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\03_features.parquet
+2026-03-11 12:26:35,143 [INFO] Shape: (25554, 54)
+2026-03-11 12:26:35,181 [INFO] STEP 04 — Label Mapping (14-class)
+2026-03-11 12:26:35,184 [INFO] Loading: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\03_features.parquet
+2026-03-11 12:26:35,236 [INFO] Mapping labels for 25,554 rows...
+2026-03-11 12:26:35,921 [INFO] 
+14-class label distribution:
+2026-03-11 12:26:35,922 [INFO]    0 benign                     9,617 ( 37.6%)
+2026-03-11 12:26:35,922 [INFO]    1 sql_injection                171 (  0.7%)
+2026-03-11 12:26:35,922 [INFO]    3 xss                          677 (  2.6%)
+2026-03-11 12:26:35,922 [INFO]    4 path_traversal                67 (  0.3%)
+2026-03-11 12:26:35,922 [INFO]   10 sensitive_file_access        316 (  1.2%)
+2026-03-11 12:26:35,923 [INFO]   13 unknown_threat            14,706 ( 57.5%)
+2026-03-11 12:26:35,923 [WARNING]   LOW SAMPLE CLASS: path_traversal only has 67 samples
+2026-03-11 12:26:35,992 [INFO] 
+Saved labeled parquet: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\04_labeled.parquet
+2026-03-11 12:26:36,000 [INFO] STEP 05 — Stratified Split 70/15/15
+2026-03-11 12:26:36,004 [INFO] Loading: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\04_labeled.parquet
+2026-03-11 12:26:36,048 [INFO] Total samples: 25,554
+2026-03-11 12:26:36,106 [INFO] 
+Split sizes:
+2026-03-11 12:26:36,106 [INFO]   Train: 17,887 (70.0%)
+2026-03-11 12:26:36,106 [INFO]   Val:   3,833   (15.0%)
+2026-03-11 12:26:36,107 [INFO]   Test:  3,834  (15.0%)
+2026-03-11 12:26:36,107 [INFO] 
+Class distribution across splits:
+2026-03-11 12:26:36,108 [INFO]   benign                    total= 9617 | train=6731 val=1443 test=1443
+2026-03-11 12:26:36,110 [INFO]   sql_injection             total=  171 | train= 119 val= 26 test= 26
+2026-03-11 12:26:36,111 [INFO]   xss                       total=  677 | train= 474 val=101 test=102
+2026-03-11 12:26:36,113 [INFO]   path_traversal            total=   67 | train=  47 val= 10 test= 10
+2026-03-11 12:26:36,114 [INFO]   sensitive_file_access     total=  316 | train= 222 val= 47 test= 47
+2026-03-11 12:26:36,115 [INFO]   unknown_threat            total=14706 | train=10294 val=2206 test=2206
+2026-03-11 12:26:36,217 [INFO] 
+Saved splits:
+2026-03-11 12:26:36,217 [INFO]   C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\05_train.parquet
+2026-03-11 12:26:36,218 [INFO]   C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\05_val.parquet
+2026-03-11 12:26:36,229 [INFO] STEP 06 — SMOTE Class Balancing
+2026-03-11 12:26:36,232 [INFO] Loading: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\05_train.parquet
+2026-03-11 12:26:36,276 [INFO] Class counts before SMOTE:
+2026-03-11 12:26:36,277 [INFO]    0 benign                     6,731
+2026-03-11 12:26:36,277 [INFO]    1 sql_injection                119
+2026-03-11 12:26:36,277 [INFO]    3 xss                          474
+2026-03-11 12:26:36,278 [INFO]    4 path_traversal                47
+2026-03-11 12:26:36,278 [INFO]   10 sensitive_file_access        222
+2026-03-11 12:26:36,278 [INFO]   13 unknown_threat            10,294
+2026-03-11 12:26:36,278 [INFO]   SMOTE: sql_injection 119 -> 595
+2026-03-11 12:26:36,278 [INFO]   SMOTE: xss 474 -> 2000
+2026-03-11 12:26:36,278 [INFO]   SMOTE: sensitive_file_access 222 -> 1110
+2026-03-11 12:26:36,279 [INFO]   SMOTE: path_traversal 47 -> 235
+2026-03-11 12:26:36,279 [INFO] Applying SMOTE with k_neighbors=5
+2026-03-11 12:26:38,158 [INFO] 
+SMOTE results:
+2026-03-11 12:26:38,158 [INFO]   Original samples:  17,887
+2026-03-11 12:26:38,158 [INFO]   Synthetic samples: 3,078
+2026-03-11 12:26:38,158 [INFO]   Total:             20,965
+2026-03-11 12:26:38,161 [INFO] 
+Class counts after SMOTE:
+2026-03-11 12:26:38,162 [INFO]    0 benign                     6,731 ->  6,731
+2026-03-11 12:26:38,162 [INFO]    1 sql_injection                119 ->    595
+2026-03-11 12:26:38,162 [INFO]    3 xss                          474 ->  2,000
+2026-03-11 12:26:38,163 [INFO]    4 path_traversal                47 ->    235
+2026-03-11 12:26:38,163 [INFO]   10 sensitive_file_access        222 ->  1,110
+2026-03-11 12:26:38,163 [INFO]   13 unknown_threat            10,294 -> 10,294
+2026-03-11 12:26:38,233 [INFO] 
+Saved balanced training data: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\06_train_balanced.parquet
+2026-03-11 12:26:38,243 [INFO] STEP 07 — XGBoost Training (CV+ES)
+2026-03-11 12:26:38,246 [INFO] Loading training data: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\06_train_balanced.parquet
+2026-03-11 12:26:38,280 [INFO] Loading val data:      C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\05_val.parquet
+2026-03-11 12:26:38,310 [INFO] 
+============================================================
+2026-03-11 12:26:38,311 [INFO] TRAINING BINARY CLASSIFIER
+2026-03-11 12:26:38,311 [INFO] ============================================================
+2026-03-11 12:26:38,311 [INFO] Train: 20,965  (normal=6,731 attack=14,234)
+2026-03-11 12:26:38,312 [INFO] Val:   3,833
+2026-03-11 12:26:38,312 [INFO] Params: {'n_estimators': 400, 'max_depth': 6, 'learning_rate': 0.05, 'subsample': 0.8, 'colsample_bytree': 0.8, 'min_child_weight': 5, 'scale_pos_weight': 1.5, 'gamma': 0.1, 'reg_alpha': 0.1, 'reg_lambda': 1.0, 'objective': 'binary:logistic', 'eval_metric': 'auc', 'tree_method': 'hist', 'random_state': 42, 'n_jobs': -1, 'use_label_encoder': False}
+2026-03-11 12:26:38,312 [INFO] 
+Running 5-fold CV...
+2026-03-11 12:26:39,628 [INFO]   Fold 1/5: F1=0.8389 AUC=0.8210
+2026-03-11 12:26:40,927 [INFO]   Fold 2/5: F1=0.8377 AUC=0.8304
+2026-03-11 12:26:42,280 [INFO]   Fold 3/5: F1=0.8436 AUC=0.8459
+2026-03-11 12:26:43,549 [INFO]   Fold 4/5: F1=0.8398 AUC=0.8332
+2026-03-11 12:26:44,848 [INFO]   Fold 5/5: F1=0.8390 AUC=0.8350
+2026-03-11 12:26:44,849 [INFO]   CV Mean: F1=0.8398 AUC=0.8331
+2026-03-11 12:26:44,852 [INFO] 
+Training final binary model on full training set...
+2026-03-11 12:26:46,278 [INFO] Training time: 1.4s
+2026-03-11 12:26:46,320 [INFO] 
+Val metrics (binary):
+2026-03-11 12:26:46,321 [INFO]   F1:         0.8043
+2026-03-11 12:26:46,321 [INFO]   ROC-AUC:    0.7931
+2026-03-11 12:26:46,321 [INFO]   FPR:        0.6618  <- target <0.08
+2026-03-11 12:26:46,321 [INFO]   CV F1:      0.8398
+2026-03-11 12:26:46,322 [WARNING]   HIGH FPR: 0.662 - consider scaling
+2026-03-11 12:26:46,371 [INFO] Saved binary model: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\models\csic_expert_binary.json
+2026-03-11 12:26:46,371 [INFO] 
+============================================================
+2026-03-11 12:26:46,372 [INFO] TRAINING MULTICLASS CLASSIFIER (14 classes)
+2026-03-11 12:26:46,372 [INFO] ============================================================
+2026-03-11 12:26:46,376 [INFO] Train class distribution:
+2026-03-11 12:26:46,377 [INFO]    0 benign                     6,731
+2026-03-11 12:26:46,377 [INFO]    1 sql_injection                595
+2026-03-11 12:26:46,377 [INFO]    3 xss                        2,000
+2026-03-11 12:26:46,377 [INFO]    4 path_traversal               235
+2026-03-11 12:26:46,378 [INFO]   10 sensitive_file_access      1,110
+2026-03-11 12:26:46,378 [INFO]   13 unknown_threat            10,294
+2026-03-11 12:26:46,380 [INFO] Using LabelEncoder: 6 classes present in training.
+2026-03-11 12:26:46,380 [INFO] Mapping: {0: np.int64(0), 1: np.int64(1), 2: np.int64(3), 3: np.int64(4), 4: np.int64(10), 5: np.int64(13)}
+2026-03-11 12:26:46,380 [INFO] 
+Running 5-fold CV...
+2026-03-11 12:26:51,708 [INFO]   Fold 1/5: F1=0.8838 AUC=0.9460
+2026-03-11 12:26:57,048 [INFO]   Fold 2/5: F1=0.8810 AUC=0.9486
+2026-03-11 12:27:02,246 [INFO]   Fold 3/5: F1=0.8774 AUC=0.9452
+2026-03-11 12:27:09,559 [INFO]   Fold 4/5: F1=0.8828 AUC=0.9483
+2026-03-11 12:27:14,783 [INFO]   Fold 5/5: F1=0.8860 AUC=0.9483
+2026-03-11 12:27:14,784 [INFO]   CV Mean: F1=0.8822 AUC=0.9473
+2026-03-11 12:27:14,789 [INFO] 
+Training final multiclass model...
+2026-03-11 12:27:20,892 [INFO] Training time: 6.1s
+2026-03-11 12:27:21,000 [INFO] 
+Val metrics (multiclass):
+2026-03-11 12:27:21,000 [INFO]   F1 macro:    0.8853
+2026-03-11 12:27:21,001 [INFO]   F1 weighted: 0.6979
+2026-03-11 12:27:21,001 [INFO]   LogLoss:     0.4840
+2026-03-11 12:27:21,001 [INFO]   CV F1:       0.8822
+2026-03-11 12:27:21,001 [INFO] 
+Per-class F1 (val set):
+2026-03-11 12:27:21,004 [INFO]    0 benign                    F1=0.527  (n=1443)
+2026-03-11 12:27:21,005 [INFO]    1 sql_injection             F1=1.000  (n=26)
+2026-03-11 12:27:21,005 [INFO]    3 xss                       F1=1.000  (n=101)
+2026-03-11 12:27:21,006 [INFO]    4 path_traversal            F1=1.000  (n=10)
+2026-03-11 12:27:21,006 [INFO]   10 sensitive_file_access     F1=1.000  (n=47)
+2026-03-11 12:27:21,007 [INFO]   13 unknown_threat            F1=0.784  (n=2206)
+2026-03-11 12:27:21,165 [INFO] Saved multiclass model: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\models\csic_expert_multiclass.json
+2026-03-11 12:27:21,168 [INFO] Saved metadata: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\models\csic_expert_metadata.json
+2026-03-11 12:27:21,169 [INFO] Saved feature names: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\models\csic_expert_feature_names.json
+2026-03-11 12:27:21,170 [INFO] 
+============================================================
+2026-03-11 12:27:21,170 [INFO] TRAINING COMPLETE SUMMARY
+2026-03-11 12:27:21,170 [INFO] ============================================================
+2026-03-11 12:27:21,171 [INFO] Binary  — F1: 0.8043  AUC: 0.7931  FPR: 0.6618
+2026-03-11 12:27:21,171 [INFO] Multiclass — F1 macro: 0.8853  LogLoss: 0.4840
+2026-03-11 12:27:21,184 [INFO] STEP 08 — Threshold Tuning
+2026-03-11 12:27:21,186 [INFO] Loading val data: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\05_val.parquet
+2026-03-11 12:27:21,202 [INFO] Loading binary model...
+2026-03-11 12:27:21,290 [INFO] Tuning binary threshold (F2-weighted for recall priority)...
+2026-03-11 12:27:22,040 [INFO]   Top 5 threshold candidates (by F2):
+2026-03-11 12:27:22,041 [INFO]     t=0.22  F1=0.795  F2=0.904  FPR=0.844  FNR=0.004  P=0.661  R=0.996
+2026-03-11 12:27:22,041 [INFO]     t=0.21  F1=0.795  F2=0.904  FPR=0.845  FNR=0.004  P=0.661  R=0.996
+2026-03-11 12:27:22,041 [INFO]     t=0.23  F1=0.795  F2=0.904  FPR=0.840  FNR=0.005  P=0.662  R=0.995
+2026-03-11 12:27:22,042 [INFO]     t=0.24  F1=0.796  F2=0.904  FPR=0.836  FNR=0.006  P=0.663  R=0.994
+2026-03-11 12:27:22,042 [INFO]     t=0.20  F1=0.794  F2=0.904  FPR=0.850  FNR=0.004  P=0.660  R=0.996
+2026-03-11 12:27:22,042 [INFO] Binary threshold: 0.68  F1=0.6658  F2=0.5849
+2026-03-11 12:27:22,042 [INFO] 
+Loading multiclass model...
+2026-03-11 12:27:22,401 [INFO] Tuning per-class thresholds...
+2026-03-11 12:27:22,652 [INFO]   sql_injection             t=0.05  F1=1.000  P=1.000  R=1.000  n=26
+2026-03-11 12:27:22,652 [WARNING]   blind_sqli (idx 2) was not in training - skipping threshold tune.
+2026-03-11 12:27:22,899 [INFO]   xss                       t=0.05  F1=1.000  P=1.000  R=1.000  n=101
+2026-03-11 12:27:23,163 [INFO]   path_traversal            t=0.05  F1=1.000  P=1.000  R=1.000  n=10
+2026-03-11 12:27:23,163 [WARNING]   command_injection (idx 5) was not in training - skipping threshold tune.
+2026-03-11 12:27:23,164 [WARNING]   code_injection (idx 6) was not in training - skipping threshold tune.
+2026-03-11 12:27:23,164 [WARNING]   ssrf (idx 7) was not in training - skipping threshold tune.
+2026-03-11 12:27:23,165 [WARNING]   ldap_injection (idx 8) was not in training - skipping threshold tune.
+2026-03-11 12:27:23,165 [WARNING]   scanning_tool (idx 9) was not in training - skipping threshold tune.
+2026-03-11 12:27:23,390 [INFO]   sensitive_file_access     t=0.05  F1=1.000  P=1.000  R=1.000  n=47
+2026-03-11 12:27:23,391 [WARNING]   credential_stuffing (idx 11) was not in training - skipping threshold tune.
+2026-03-11 12:27:23,391 [WARNING]   api_enumeration (idx 12) was not in training - skipping threshold tune.
+2026-03-11 12:27:23,614 [INFO]   unknown_threat            t=0.37  F1=0.791  P=0.681  R=0.943  n=2206
+2026-03-11 12:27:23,615 [INFO] 
+Saved thresholds: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\models\csic_expert_thresholds.json
+2026-03-11 12:27:23,629 [INFO] STEP 09 — Evaluation (Locked Test)
+2026-03-11 12:27:23,631 [INFO] Loading LOCKED test set: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\05_test.parquet
+2026-03-11 12:27:23,631 [INFO] WARNING: This consumes the locked test set — only run after training is final
+2026-03-11 12:27:23,646 [INFO] Loaded label mapping: {0: 0, 1: 1, 2: 3, 3: 4, 4: 10, 5: 13}
+2026-03-11 12:27:23,647 [INFO] 
+BINARY CLASSIFIER EVALUATION
+2026-03-11 12:27:23,719 [INFO]   Threshold:  0.68
+2026-03-11 12:27:23,719 [INFO]   F1:         0.6603
+2026-03-11 12:27:23,720 [INFO]   Precision:  0.8646
+2026-03-11 12:27:23,720 [INFO]   Recall:     0.5341
+2026-03-11 12:27:23,720 [INFO]   ROC-AUC:    0.7769
+2026-03-11 12:27:23,720 [INFO]   FPR:        0.1386  [FAIL] (>0.08)
+2026-03-11 12:27:23,720 [INFO]   FNR:        0.4659
+2026-03-11 12:27:23,720 [INFO]   TP=1277 FP=200 TN=1243 FN=1114
+2026-03-11 12:27:23,720 [INFO] 
+MULTICLASS CLASSIFIER EVALUATION
+2026-03-11 12:27:24,145 [INFO]   Decoded predictions: encoded [np.int64(0), np.int64(1), np.int64(2), np.int64(3), np.int64(4), np.int64(5)] -> original [np.int64(0), np.int64(1), np.int64(3), np.int64(4), np.int64(10), np.int64(13)]
+2026-03-11 12:27:24,171 [INFO]   F1 macro:    0.8776
+2026-03-11 12:27:24,172 [INFO]   F1 weighted: 0.6784
+2026-03-11 12:27:24,172 [INFO]   LogLoss:     0.4948
+2026-03-11 12:27:24,172 [INFO]   ROC-AUC:     0.9267
+2026-03-11 12:27:24,172 [INFO] 
+Per-class metrics (test set):
+2026-03-11 12:27:24,182 [INFO]    0 benign                    F1=0.493  P=0.683  R=0.385  n=1443
+2026-03-11 12:27:24,182 [INFO]    1 sql_injection             F1=1.000  P=1.000  R=1.000  n=  26
+2026-03-11 12:27:24,182 [INFO]    3 xss                       F1=1.000  P=1.000  R=1.000  n= 102
+2026-03-11 12:27:24,183 [INFO]    4 path_traversal            F1=1.000  P=1.000  R=1.000  n=  10
+2026-03-11 12:27:24,184 [INFO]   10 sensitive_file_access     F1=1.000  P=1.000  R=1.000  n=  47
+2026-03-11 12:27:24,184 [INFO]   13 unknown_threat            F1=0.773  P=0.687  R=0.883  n=2206
+2026-03-11 12:27:24,763 [INFO] 
+Saved confusion matrix: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\reports\confusion_matrix.png
+2026-03-11 12:27:24,765 [INFO] Saved evaluation report: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\reports\evaluation_report.json
+2026-03-11 12:27:24,765 [INFO] 
+Classification report (multiclass):
+2026-03-11 12:27:24,774 [INFO]                        precision    recall  f1-score   support
+
+               benign       0.68      0.39      0.49      1443
+        sql_injection       1.00      1.00      1.00        26
+                  xss       1.00      1.00      1.00       102
+       path_traversal       1.00      1.00      1.00        10
+sensitive_file_access       1.00      1.00      1.00        47
+       unknown_threat       0.69      0.88      0.77      2206
+
+             accuracy                           0.70      3834
+            macro avg       0.90      0.88      0.88      3834
+         weighted avg       0.70      0.70      0.68      3834
+
+2026-03-11 12:27:24,784 [INFO] STEP 10 — SHAP Explainability
+2026-03-11 12:27:24,787 [INFO] Loading val data: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\05_val.parquet
+2026-03-11 12:27:24,804 [INFO] Computing SHAP for binary model...
+2026-03-11 12:27:26,225 [INFO] Saved binary SHAP plot
+2026-03-11 12:27:26,226 [INFO] 
+Top 15 features by mean |SHAP| (binary):
+2026-03-11 12:27:26,227 [INFO]   encoded_char_count                  0.6296
+2026-03-11 12:27:26,227 [INFO]   param_count                         0.4967
+2026-03-11 12:27:26,227 [INFO]   url_entropy                         0.3684
+2026-03-11 12:27:26,228 [INFO]   query_string_length                 0.3341
+2026-03-11 12:27:26,228 [INFO]   url_length                          0.2708
+2026-03-11 12:27:26,228 [INFO]   path_length                         0.2545
+2026-03-11 12:27:26,228 [INFO]   method_encoded                      0.2158
+2026-03-11 12:27:26,228 [INFO]   double_encoded                      0.1499
+2026-03-11 12:27:26,228 [INFO]   query_entropy                       0.1432
+2026-03-11 12:27:26,229 [INFO]   xss_keyword_score                   0.1431
+2026-03-11 12:27:26,229 [INFO]   is_backup_file                      0.1316
+2026-03-11 12:27:26,229 [INFO]   path_entropy                        0.1074
+2026-03-11 12:27:26,229 [INFO]   path_depth                          0.0472
+2026-03-11 12:27:26,229 [INFO]   sqli_keyword_score                  0.0392
+2026-03-11 12:27:26,229 [INFO]   special_char_count                  0.0000
+2026-03-11 12:27:26,229 [INFO] 
+Computing SHAP for multiclass model...
+2026-03-11 12:27:28,171 [INFO] Saved feature importance: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\reports\feature_importance.json
+2026-03-11 12:27:28,177 [INFO] Saved SHAP values: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\reports\shap_values.npz
+2026-03-11 12:27:28,204 [INFO] STEP 11 — ONNX Export
+2026-03-11 12:27:28,208 [INFO] 
+Converting Binary Classifier...
+2026-03-11 12:27:28,209 [INFO]   Input:  C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\models\csic_expert_binary.json
+2026-03-11 12:27:28,209 [INFO]   Output: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\models\csic_expert_binary.onnx
+2026-03-11 12:27:28,730 [INFO]   Saved ONNX model: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\models\csic_expert_binary.onnx
+2026-03-11 12:27:28,731 [INFO]   ONNX file size: 491.0 KB
+2026-03-11 12:27:28,732 [INFO] 
+Converting Multiclass Classifier...
+2026-03-11 12:27:28,732 [INFO]   Input:  C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\models\csic_expert_multiclass.json
+2026-03-11 12:27:28,732 [INFO]   Output: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\models\csic_expert_multiclass.onnx
+2026-03-11 12:27:30,559 [INFO]   Saved ONNX model: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\models\csic_expert_multiclass.onnx
+2026-03-11 12:27:30,559 [INFO]   ONNX file size: 2111.6 KB
+2026-03-11 12:27:30,568 [INFO] 
+All ONNX exports successful
+2026-03-11 12:27:30,574 [INFO] STEP 12 — ONNX Validation
+2026-03-11 12:27:30,577 [INFO] Loading val samples: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\05_val.parquet
+2026-03-11 12:27:30,591 [INFO] Validating on 1000 samples
+2026-03-11 12:27:30,591 [INFO] 
+Validating Binary Classifier...
+2026-03-11 12:27:30,752 [INFO]   Label agreement: 100.000%
+2026-03-11 12:27:30,754 [INFO]   Max prob diff:  2.98e-07  (limit: 1e-04)
+2026-03-11 12:27:30,756 [INFO]   Mean prob diff: 4.84e-08
+2026-03-11 12:27:30,895 [INFO]   ONNX latency:   0.035ms/req
+2026-03-11 12:27:30,895 [INFO]   XGBoost latency:1.343ms/req
+2026-03-11 12:27:30,896 [INFO]   Speedup:        38.4x
+2026-03-11 12:27:30,896 [INFO]   Binary Classifier: [PASS]
+2026-03-11 12:27:30,900 [INFO] 
+Validating Multiclass Classifier...
+2026-03-11 12:27:31,395 [INFO]   Label agreement: 100.000%
+2026-03-11 12:27:31,396 [INFO]   Max prob diff:  5.36e-07  (limit: 1e-04)
+2026-03-11 12:27:31,396 [INFO]   Mean prob diff: 5.21e-08
+2026-03-11 12:27:31,600 [INFO]   ONNX latency:   0.081ms/req
+2026-03-11 12:27:31,600 [INFO]   XGBoost latency:1.954ms/req
+2026-03-11 12:27:31,600 [INFO]   Speedup:        24.0x
+2026-03-11 12:27:31,600 [INFO]   Multiclass Classifier: [PASS]
+2026-03-11 12:27:31,612 [INFO] 
+========================================
+2026-03-11 12:27:31,613 [INFO] ONNX VALIDATION RESULTS
+2026-03-11 12:27:31,613 [INFO] Binary:     [PASS]
+2026-03-11 12:27:31,613 [INFO] Multiclass: [PASS]
+2026-03-11 12:27:31,614 [INFO] All models validated — safe to use ONNX in production
+2026-03-11 12:27:31,620 [INFO] PIPELINE SUMMARY
+2026-03-11 12:27:31,623 [INFO] Total time: 75.3s (1.3min)
+2026-03-11 12:27:31,652 [INFO] 
+================================================================
+2026-03-11 12:27:31,653 [INFO] ALL STEPS COMPLETE — CSIC Expert ready for APISentinel
+2026-03-11 12:27:31,653 [INFO] ================================================================
+2026-03-11 12:27:31,653 [INFO] Models saved to:    outputs/models/
+2026-03-11 12:27:31,653 [INFO] Reports saved to:   outputs/reports/
+2026-03-11 12:27:31,653 [INFO] Logs saved to:      outputs/logs/
+2026-03-11 12:27:31,653 [INFO] 
+Next step: Run expert_2_kaggle pipeline
+2026-03-11 12:27:31,653 [INFO] After all 9 experts: Train meta-learner on OOF predictions
+2026-03-11 12:40:23,135 [INFO] Dataset:    ..\csic_database.csv
+2026-03-11 12:40:23,137 [INFO] Output dir: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs
+2026-03-11 12:40:23,138 [INFO] Start step: 4
+2026-03-11 12:40:36,486 [INFO] Skipping step 01 (start_step=4)
+2026-03-11 12:40:36,487 [INFO] Skipping step 02 (start_step=4)
+2026-03-11 12:40:36,487 [INFO] Skipping step 03 (start_step=4)
+2026-03-11 12:40:36,496 [INFO] STEP 04 — Label Mapping (14-class)
+2026-03-11 12:40:36,500 [INFO] Loading: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\03_features.parquet
+2026-03-11 12:40:36,824 [INFO] Mapping labels for 25,554 rows...
+2026-03-11 12:40:37,707 [INFO] Dropping 14,706 'unknown_threat' samples (CSIC parameter tampering).
+2026-03-11 12:40:37,707 [INFO] These lack distinguishing static features in our 50-feature space.
+2026-03-11 12:40:37,708 [INFO] Keeping them would corrupt the binary classifier and cause massive FPR.
+2026-03-11 12:40:37,735 [INFO] 
+14-class label distribution (after dropping unknown_threat):
+2026-03-11 12:40:37,736 [INFO]    0 benign                     9,617 ( 88.7%)
+2026-03-11 12:40:37,736 [INFO]    1 sql_injection                171 (  1.6%)
+2026-03-11 12:40:37,736 [INFO]    3 xss                          677 (  6.2%)
+2026-03-11 12:40:37,736 [INFO]    4 path_traversal                67 (  0.6%)
+2026-03-11 12:40:37,737 [INFO]   10 sensitive_file_access        316 (  2.9%)
+2026-03-11 12:40:37,737 [WARNING]   LOW SAMPLE CLASS: path_traversal only has 67 samples
+2026-03-11 12:40:37,815 [INFO] 
+Saved labeled parquet: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\04_labeled.parquet
+2026-03-11 12:40:37,830 [INFO] STEP 05 — Stratified Split 70/15/15
+2026-03-11 12:40:37,834 [INFO] Loading: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\04_labeled.parquet
+2026-03-11 12:40:37,876 [INFO] Total samples: 10,848
+2026-03-11 12:40:37,924 [INFO] 
+Split sizes:
+2026-03-11 12:40:37,924 [INFO]   Train: 7,592 (70.0%)
+2026-03-11 12:40:37,925 [INFO]   Val:   1,628   (15.0%)
+2026-03-11 12:40:37,925 [INFO]   Test:  1,628  (15.0%)
+2026-03-11 12:40:37,926 [INFO] 
+Class distribution across splits:
+2026-03-11 12:40:37,928 [INFO]   benign                    total= 9617 | train=6731 val=1443 test=1443
+2026-03-11 12:40:37,929 [INFO]   sql_injection             total=  171 | train= 119 val= 26 test= 26
+2026-03-11 12:40:37,930 [INFO]   xss                       total=  677 | train= 473 val=102 test=102
+2026-03-11 12:40:37,933 [INFO]   path_traversal            total=   67 | train=  47 val= 10 test= 10
+2026-03-11 12:40:37,935 [INFO]   sensitive_file_access     total=  316 | train= 222 val= 47 test= 47
+2026-03-11 12:40:38,035 [INFO] 
+Saved splits:
+2026-03-11 12:40:38,035 [INFO]   C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\05_train.parquet
+2026-03-11 12:40:38,035 [INFO]   C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\05_val.parquet
+2026-03-11 12:40:38,048 [INFO] STEP 06 — SMOTE Class Balancing
+2026-03-11 12:40:38,052 [INFO] Loading: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\05_train.parquet
+2026-03-11 12:40:38,096 [INFO] Class counts before SMOTE:
+2026-03-11 12:40:38,096 [INFO]    0 benign                     6,731
+2026-03-11 12:40:38,097 [INFO]    1 sql_injection                119
+2026-03-11 12:40:38,097 [INFO]    3 xss                          473
+2026-03-11 12:40:38,098 [INFO]    4 path_traversal                47
+2026-03-11 12:40:38,098 [INFO]   10 sensitive_file_access        222
+2026-03-11 12:40:38,099 [INFO]   SMOTE: sensitive_file_access 222 -> 1110
+2026-03-11 12:40:38,099 [INFO]   SMOTE: path_traversal 47 -> 235
+2026-03-11 12:40:38,099 [INFO]   SMOTE: sql_injection 119 -> 595
+2026-03-11 12:40:38,100 [INFO]   SMOTE: xss 473 -> 2000
+2026-03-11 12:40:38,100 [INFO] Applying SMOTE with k_neighbors=5
+2026-03-11 12:40:40,936 [INFO] 
+SMOTE results:
+2026-03-11 12:40:40,937 [INFO]   Original samples:  7,592
+2026-03-11 12:40:40,937 [INFO]   Synthetic samples: 3,079
+2026-03-11 12:40:40,937 [INFO]   Total:             10,671
+2026-03-11 12:40:40,940 [INFO] 
+Class counts after SMOTE:
+2026-03-11 12:40:40,941 [INFO]    0 benign                     6,731 ->  6,731
+2026-03-11 12:40:40,941 [INFO]    1 sql_injection                119 ->    595
+2026-03-11 12:40:40,942 [INFO]    3 xss                          473 ->  2,000
+2026-03-11 12:40:40,942 [INFO]    4 path_traversal                47 ->    235
+2026-03-11 12:40:40,943 [INFO]   10 sensitive_file_access        222 ->  1,110
+2026-03-11 12:40:41,036 [INFO] 
+Saved balanced training data: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\06_train_balanced.parquet
+2026-03-11 12:40:41,050 [INFO] STEP 07 — XGBoost Training (CV+ES)
+2026-03-11 12:40:41,053 [INFO] Loading training data: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\06_train_balanced.parquet
+2026-03-11 12:40:41,091 [INFO] Loading val data:      C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\05_val.parquet
+2026-03-11 12:40:41,120 [INFO] 
+============================================================
+2026-03-11 12:40:41,121 [INFO] TRAINING BINARY CLASSIFIER
+2026-03-11 12:40:41,121 [INFO] ============================================================
+2026-03-11 12:40:41,122 [INFO] Train: 10,671  (normal=6,731 attack=3,940)
+2026-03-11 12:40:41,122 [INFO] Val:   1,628
+2026-03-11 12:40:41,123 [INFO] Params: {'n_estimators': 400, 'max_depth': 6, 'learning_rate': 0.05, 'subsample': 0.8, 'colsample_bytree': 0.8, 'min_child_weight': 5, 'scale_pos_weight': 1.5, 'gamma': 0.1, 'reg_alpha': 0.1, 'reg_lambda': 1.0, 'objective': 'binary:logistic', 'eval_metric': 'auc', 'tree_method': 'hist', 'random_state': 42, 'n_jobs': -1, 'use_label_encoder': False}
+2026-03-11 12:40:41,123 [INFO] 
+Running 5-fold CV...
+2026-03-11 12:40:42,274 [INFO]   Fold 1/5: F1=1.0000 AUC=1.0000
+2026-03-11 12:40:43,317 [INFO]   Fold 2/5: F1=1.0000 AUC=1.0000
+2026-03-11 12:40:44,344 [INFO]   Fold 3/5: F1=1.0000 AUC=1.0000
+2026-03-11 12:40:45,479 [INFO]   Fold 4/5: F1=0.9994 AUC=1.0000
+2026-03-11 12:40:46,530 [INFO]   Fold 5/5: F1=1.0000 AUC=1.0000
+2026-03-11 12:40:46,531 [INFO]   CV Mean: F1=0.9999 AUC=1.0000
+2026-03-11 12:40:46,533 [INFO] 
+Training final binary model on full training set...
+2026-03-11 12:40:47,695 [INFO] Training time: 1.2s
+2026-03-11 12:40:47,712 [INFO] 
+Val metrics (binary):
+2026-03-11 12:40:47,713 [INFO]   F1:         1.0000
+2026-03-11 12:40:47,714 [INFO]   ROC-AUC:    1.0000
+2026-03-11 12:40:47,714 [INFO]   FPR:        0.0000  <- target <0.08
+2026-03-11 12:40:47,715 [INFO]   CV F1:      0.9999
+2026-03-11 12:40:47,742 [INFO] Saved binary model: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\models\csic_expert_binary.json
+2026-03-11 12:40:47,743 [INFO] 
+============================================================
+2026-03-11 12:40:47,743 [INFO] TRAINING MULTICLASS CLASSIFIER (14 classes)
+2026-03-11 12:40:47,743 [INFO] ============================================================
+2026-03-11 12:40:47,746 [INFO] Train class distribution:
+2026-03-11 12:40:47,746 [INFO]    0 benign                     6,731
+2026-03-11 12:40:47,747 [INFO]    1 sql_injection                595
+2026-03-11 12:40:47,747 [INFO]    3 xss                        2,000
+2026-03-11 12:40:47,747 [INFO]    4 path_traversal               235
+2026-03-11 12:40:47,748 [INFO]   10 sensitive_file_access      1,110
+2026-03-11 12:40:47,755 [INFO] Using LabelEncoder: 5 classes present in training.
+2026-03-11 12:40:47,756 [INFO] Mapping: {0: np.int64(0), 1: np.int64(1), 2: np.int64(3), 3: np.int64(4), 4: np.int64(10)}
+2026-03-11 12:40:47,756 [INFO] 
+Running 5-fold CV...
+2026-03-11 12:40:51,455 [INFO]   Fold 1/5: F1=1.0000 AUC=1.0000
+2026-03-11 12:40:54,870 [INFO]   Fold 2/5: F1=1.0000 AUC=1.0000
+2026-03-11 12:40:58,607 [INFO]   Fold 3/5: F1=1.0000 AUC=1.0000
+2026-03-11 12:41:02,478 [INFO]   Fold 4/5: F1=1.0000 AUC=1.0000
+2026-03-11 12:41:05,206 [INFO]   Fold 5/5: F1=1.0000 AUC=1.0000
+2026-03-11 12:41:05,207 [INFO]   CV Mean: F1=1.0000 AUC=1.0000
+2026-03-11 12:41:05,209 [INFO] 
+Training final multiclass model...
+2026-03-11 12:41:08,299 [INFO] Training time: 3.1s
+2026-03-11 12:41:08,334 [INFO] 
+Val metrics (multiclass):
+2026-03-11 12:41:08,335 [INFO]   F1 macro:    1.0000
+2026-03-11 12:41:08,335 [INFO]   F1 weighted: 1.0000
+2026-03-11 12:41:08,335 [INFO]   LogLoss:     0.0008
+2026-03-11 12:41:08,335 [INFO]   CV F1:       1.0000
+2026-03-11 12:41:08,336 [INFO] 
+Per-class F1 (val set):
+2026-03-11 12:41:08,340 [INFO]    0 benign                    F1=1.000  (n=1443)
+2026-03-11 12:41:08,340 [INFO]    1 sql_injection             F1=1.000  (n=26)
+2026-03-11 12:41:08,341 [INFO]    3 xss                       F1=1.000  (n=102)
+2026-03-11 12:41:08,342 [INFO]    4 path_traversal            F1=1.000  (n=10)
+2026-03-11 12:41:08,342 [INFO]   10 sensitive_file_access     F1=1.000  (n=47)
+2026-03-11 12:41:08,399 [INFO] Saved multiclass model: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\models\csic_expert_multiclass.json
+2026-03-11 12:41:08,402 [INFO] Saved metadata: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\models\csic_expert_metadata.json
+2026-03-11 12:41:08,404 [INFO] Saved feature names: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\models\csic_expert_feature_names.json
+2026-03-11 12:41:08,405 [INFO] 
+============================================================
+2026-03-11 12:41:08,405 [INFO] TRAINING COMPLETE SUMMARY
+2026-03-11 12:41:08,405 [INFO] ============================================================
+2026-03-11 12:41:08,406 [INFO] Binary  — F1: 1.0000  AUC: 1.0000  FPR: 0.0000
+2026-03-11 12:41:08,406 [INFO] Multiclass — F1 macro: 1.0000  LogLoss: 0.0008
+2026-03-11 12:41:08,414 [INFO] STEP 08 — Threshold Tuning
+2026-03-11 12:41:08,417 [INFO] Loading val data: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\05_val.parquet
+2026-03-11 12:41:08,430 [INFO] Loading binary model...
+2026-03-11 12:41:08,461 [INFO] Tuning binary threshold (Constrained optimization FPR <= 0.08)...
+2026-03-11 12:41:08,993 [INFO]   Top 5 threshold candidates (by Recall, FPR <= 0.08):
+2026-03-11 12:41:08,993 [INFO]     t=0.05  F1=0.987  FPR=0.003  Recall=1.000  Precision=0.974
+2026-03-11 12:41:08,994 [INFO]     t=0.06  F1=0.987  FPR=0.003  Recall=1.000  Precision=0.974
+2026-03-11 12:41:08,994 [INFO]     t=0.07  F1=0.987  FPR=0.003  Recall=1.000  Precision=0.974
+2026-03-11 12:41:08,994 [INFO]     t=0.08  F1=0.989  FPR=0.003  Recall=1.000  Precision=0.979
+2026-03-11 12:41:08,994 [INFO]     t=0.09  F1=0.992  FPR=0.002  Recall=1.000  Precision=0.984
+2026-03-11 12:41:08,995 [INFO] Binary threshold: 0.05  F1=0.9867  Recall=1.0000
+2026-03-11 12:41:08,995 [INFO] 
+Loading multiclass model...
+2026-03-11 12:41:09,087 [INFO] Tuning per-class thresholds...
+2026-03-11 12:41:09,409 [INFO]   sql_injection             t=0.05  F1=1.000  P=1.000  R=1.000  n=26
+2026-03-11 12:41:09,410 [WARNING]   blind_sqli (idx 2) was not in training - skipping threshold tune.
+2026-03-11 12:41:09,682 [INFO]   xss                       t=0.05  F1=1.000  P=1.000  R=1.000  n=102
+2026-03-11 12:41:09,976 [INFO]   path_traversal            t=0.05  F1=1.000  P=1.000  R=1.000  n=10
+2026-03-11 12:41:09,977 [WARNING]   command_injection (idx 5) was not in training - skipping threshold tune.
+2026-03-11 12:41:09,977 [WARNING]   code_injection (idx 6) was not in training - skipping threshold tune.
+2026-03-11 12:41:09,978 [WARNING]   ssrf (idx 7) was not in training - skipping threshold tune.
+2026-03-11 12:41:09,978 [WARNING]   ldap_injection (idx 8) was not in training - skipping threshold tune.
+2026-03-11 12:41:09,979 [WARNING]   scanning_tool (idx 9) was not in training - skipping threshold tune.
+2026-03-11 12:41:10,277 [INFO]   sensitive_file_access     t=0.05  F1=1.000  P=1.000  R=1.000  n=47
+2026-03-11 12:41:10,277 [WARNING]   credential_stuffing (idx 11) was not in training - skipping threshold tune.
+2026-03-11 12:41:10,278 [WARNING]   api_enumeration (idx 12) was not in training - skipping threshold tune.
+2026-03-11 12:41:10,278 [WARNING]   unknown_threat (idx 13) was not in training - skipping threshold tune.
+2026-03-11 12:41:10,280 [INFO] 
+Saved thresholds: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\models\csic_expert_thresholds.json
+2026-03-11 12:41:10,293 [INFO] STEP 09 — Evaluation (Locked Test)
+2026-03-11 12:41:10,298 [INFO] Loading LOCKED test set: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\05_test.parquet
+2026-03-11 12:41:10,298 [INFO] WARNING: This consumes the locked test set — only run after training is final
+2026-03-11 12:41:10,326 [INFO] Loaded label mapping: {0: 0, 1: 1, 2: 3, 3: 4, 4: 10}
+2026-03-11 12:41:10,327 [INFO] 
+BINARY CLASSIFIER EVALUATION
+2026-03-11 12:41:10,356 [INFO]   Threshold:  0.05
+2026-03-11 12:41:10,357 [INFO]   F1:         0.9867
+2026-03-11 12:41:10,357 [INFO]   Precision:  0.9737
+2026-03-11 12:41:10,357 [INFO]   Recall:     1.0000
+2026-03-11 12:41:10,358 [INFO]   ROC-AUC:    1.0000
+2026-03-11 12:41:10,358 [INFO]   FPR:        0.0035  [PASS]
+2026-03-11 12:41:10,358 [INFO]   FNR:        0.0000
+2026-03-11 12:41:10,358 [INFO]   TP=185 FP=5 TN=1438 FN=0
+2026-03-11 12:41:10,359 [INFO] 
+MULTICLASS CLASSIFIER EVALUATION
+2026-03-11 12:41:10,475 [INFO]   Decoded predictions: encoded [np.int64(0), np.int64(1), np.int64(2), np.int64(3), np.int64(4)] -> original [np.int64(0), np.int64(1), np.int64(3), np.int64(4), np.int64(10)]
+2026-03-11 12:41:10,502 [INFO]   F1 macro:    1.0000
+2026-03-11 12:41:10,502 [INFO]   F1 weighted: 1.0000
+2026-03-11 12:41:10,503 [INFO]   LogLoss:     0.0011
+2026-03-11 12:41:10,503 [INFO]   ROC-AUC:     1.0000
+2026-03-11 12:41:10,503 [INFO] 
+Per-class metrics (test set):
+2026-03-11 12:41:10,512 [INFO]    0 benign                    F1=1.000  P=1.000  R=1.000  n=1443
+2026-03-11 12:41:10,512 [INFO]    1 sql_injection             F1=1.000  P=1.000  R=1.000  n=  26
+2026-03-11 12:41:10,513 [INFO]    3 xss                       F1=1.000  P=1.000  R=1.000  n= 102
+2026-03-11 12:41:10,513 [INFO]    4 path_traversal            F1=1.000  P=1.000  R=1.000  n=  10
+2026-03-11 12:41:10,513 [INFO]   10 sensitive_file_access     F1=1.000  P=1.000  R=1.000  n=  47
+2026-03-11 12:41:11,328 [INFO] 
+Saved confusion matrix: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\reports\confusion_matrix.png
+2026-03-11 12:41:11,331 [INFO] Saved evaluation report: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\reports\evaluation_report.json
+2026-03-11 12:41:11,331 [INFO] 
+Classification report (multiclass):
+2026-03-11 12:41:11,341 [INFO]                        precision    recall  f1-score   support
+
+               benign       1.00      1.00      1.00      1443
+        sql_injection       1.00      1.00      1.00        26
+                  xss       1.00      1.00      1.00       102
+       path_traversal       1.00      1.00      1.00        10
+sensitive_file_access       1.00      1.00      1.00        47
+
+             accuracy                           1.00      1628
+            macro avg       1.00      1.00      1.00      1628
+         weighted avg       1.00      1.00      1.00      1628
+
+2026-03-11 12:41:11,351 [INFO] STEP 10 — SHAP Explainability
+2026-03-11 12:41:11,355 [INFO] Loading val data: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\05_val.parquet
+2026-03-11 12:41:11,370 [INFO] Computing SHAP for binary model...
+2026-03-11 12:41:13,024 [INFO] Saved binary SHAP plot
+2026-03-11 12:41:13,025 [INFO] 
+Top 15 features by mean |SHAP| (binary):
+2026-03-11 12:41:13,025 [INFO]   xss_keyword_score                   2.5175
+2026-03-11 12:41:13,026 [INFO]   is_sensitive_file                   1.1611
+2026-03-11 12:41:13,026 [INFO]   encoded_char_count                  1.1602
+2026-03-11 12:41:13,027 [INFO]   sqli_keyword_score                  0.9445
+2026-03-11 12:41:13,027 [INFO]   param_count                         0.7464
+2026-03-11 12:41:13,027 [INFO]   method_encoded                      0.5180
+2026-03-11 12:41:13,028 [INFO]   url_entropy                         0.2921
+2026-03-11 12:41:13,028 [INFO]   is_backup_file                      0.2725
+2026-03-11 12:41:13,029 [INFO]   path_length                         0.1856
+2026-03-11 12:41:13,029 [INFO]   url_length                          0.1078
+2026-03-11 12:41:13,030 [INFO]   query_string_length                 0.0546
+2026-03-11 12:41:13,030 [INFO]   double_encoded                      0.0440
+2026-03-11 12:41:13,031 [INFO]   path_traversal_score                0.0390
+2026-03-11 12:41:13,031 [INFO]   path_entropy                        0.0387
+2026-03-11 12:41:13,032 [INFO]   query_entropy                       0.0161
+2026-03-11 12:41:13,032 [INFO] 
+Computing SHAP for multiclass model...
+2026-03-11 12:41:13,840 [INFO] Saved feature importance: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\reports\feature_importance.json
+2026-03-11 12:41:13,846 [INFO] Saved SHAP values: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\reports\shap_values.npz
+2026-03-11 12:41:13,874 [INFO] STEP 11 — ONNX Export
+2026-03-11 12:41:13,877 [INFO] 
+Converting Binary Classifier...
+2026-03-11 12:41:13,878 [INFO]   Input:  C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\models\csic_expert_binary.json
+2026-03-11 12:41:13,878 [INFO]   Output: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\models\csic_expert_binary.onnx
+2026-03-11 12:41:14,022 [INFO]   Saved ONNX model: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\models\csic_expert_binary.onnx
+2026-03-11 12:41:14,023 [INFO]   ONNX file size: 84.9 KB
+2026-03-11 12:41:14,024 [INFO] 
+Converting Multiclass Classifier...
+2026-03-11 12:41:14,025 [INFO]   Input:  C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\models\csic_expert_multiclass.json
+2026-03-11 12:41:14,026 [INFO]   Output: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\models\csic_expert_multiclass.onnx
+2026-03-11 12:41:14,335 [INFO]   Saved ONNX model: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\models\csic_expert_multiclass.onnx
+2026-03-11 12:41:14,341 [INFO]   ONNX file size: 243.3 KB
+2026-03-11 12:41:14,348 [INFO] 
+All ONNX exports successful
+2026-03-11 12:41:14,364 [INFO] STEP 12 — ONNX Validation
+2026-03-11 12:41:14,368 [INFO] Loading val samples: C:\Users\ELCOT\Downloads\APISentinel_CSIC_Pipeline\apisentinel_csic\outputs\data\05_val.parquet
+2026-03-11 12:41:14,388 [INFO] Validating on 1000 samples
+2026-03-11 12:41:14,389 [INFO] 
+Validating Binary Classifier...
+2026-03-11 12:41:14,524 [INFO]   Label agreement: 100.000%
+2026-03-11 12:41:14,525 [INFO]   Max prob diff:  7.96e-08  (limit: 1e-04)
+2026-03-11 12:41:14,526 [INFO]   Mean prob diff: 3.12e-08
+2026-03-11 12:41:14,642 [INFO]   ONNX latency:   0.054ms/req
+2026-03-11 12:41:14,642 [INFO]   XGBoost latency:1.101ms/req
+2026-03-11 12:41:14,642 [INFO]   Speedup:        20.4x
+2026-03-11 12:41:14,643 [INFO]   Binary Classifier: [PASS]
+2026-03-11 12:41:14,646 [INFO] 
+Validating Multiclass Classifier...
+2026-03-11 12:41:14,819 [INFO]   Label agreement: 100.000%
+2026-03-11 12:41:14,825 [INFO]   Max prob diff:  2.38e-07  (limit: 1e-04)
+2026-03-11 12:41:14,826 [INFO]   Mean prob diff: 7.40e-09
+2026-03-11 12:41:15,026 [INFO]   ONNX latency:   0.087ms/req
+2026-03-11 12:41:15,026 [INFO]   XGBoost latency:1.853ms/req
+2026-03-11 12:41:15,027 [INFO]   Speedup:        21.3x
+2026-03-11 12:41:15,027 [INFO]   Multiclass Classifier: [PASS]
+2026-03-11 12:41:15,033 [INFO] 
+========================================
+2026-03-11 12:41:15,035 [INFO] ONNX VALIDATION RESULTS
+2026-03-11 12:41:15,036 [INFO] Binary:     [PASS]
+2026-03-11 12:41:15,036 [INFO] Multiclass: [PASS]
+2026-03-11 12:41:15,037 [INFO] All models validated — safe to use ONNX in production
+2026-03-11 12:41:15,043 [INFO] PIPELINE SUMMARY
+2026-03-11 12:41:15,046 [INFO] Total time: 51.9s (0.9min)
+2026-03-11 12:41:15,073 [INFO] 
+================================================================
+2026-03-11 12:41:15,073 [INFO] ALL STEPS COMPLETE — CSIC Expert ready for APISentinel
+2026-03-11 12:41:15,074 [INFO] ================================================================
+2026-03-11 12:41:15,074 [INFO] Models saved to:    outputs/models/
+2026-03-11 12:41:15,074 [INFO] Reports saved to:   outputs/reports/
+2026-03-11 12:41:15,074 [INFO] Logs saved to:      outputs/logs/
+2026-03-11 12:41:15,074 [INFO] 
+Next step: Run expert_2_kaggle pipeline
+2026-03-11 12:41:15,075 [INFO] After all 9 experts: Train meta-learner on OOF predictions

@@ -1,0 +1,84 @@
+{
+  "binary_top20": [
+    {
+      "feature": "xss_keyword_score",
+      "mean_abs_shap": 2.517486333847046
+    },
+    {
+      "feature": "is_sensitive_file",
+      "mean_abs_shap": 1.1610766649246216
+    },
+    {
+      "feature": "encoded_char_count",
+      "mean_abs_shap": 1.1601901054382324
+    },
+    {
+      "feature": "sqli_keyword_score",
+      "mean_abs_shap": 0.9444636702537537
+    },
+    {
+      "feature": "param_count",
+      "mean_abs_shap": 0.7463740706443787
+    },
+    {
+      "feature": "method_encoded",
+      "mean_abs_shap": 0.5180172324180603
+    },
+    {
+      "feature": "url_entropy",
+      "mean_abs_shap": 0.29211804270744324
+    },
+    {
+      "feature": "is_backup_file",
+      "mean_abs_shap": 0.27250972390174866
+    },
+    {
+      "feature": "path_length",
+      "mean_abs_shap": 0.185578390955925
+    },
+    {
+      "feature": "url_length",
+      "mean_abs_shap": 0.10775015503168106
+    },
+    {
+      "feature": "query_string_length",
+      "mean_abs_shap": 0.05462685599923134
+    },
+    {
+      "feature": "double_encoded",
+      "mean_abs_shap": 0.04401689022779465
+    },
+    {
+      "feature": "path_traversal_score",
+      "mean_abs_shap": 0.03899560868740082
+    },
+    {
+      "feature": "path_entropy",
+      "mean_abs_shap": 0.03866416588425636
+    },
+    {
+      "feature": "query_entropy",
+      "mean_abs_shap": 0.01611264795064926
+    },
+    {
+      "feature": "path_depth",
+      "mean_abs_shap": 0.0
+    },
+    {
+      "feature": "special_char_count",
+      "mean_abs_shap": 0.0
+    },
+    {
+      "feature": "null_byte_present",
+      "mean_abs_shap": 0.0
+    },
+    {
+      "feature": "path_traversal_depth",
+      "mean_abs_shap": 0.0
+    },
+    {
+      "feature": "has_file_extension",
+      "mean_abs_shap": 0.0
+    }
+  ]
+}

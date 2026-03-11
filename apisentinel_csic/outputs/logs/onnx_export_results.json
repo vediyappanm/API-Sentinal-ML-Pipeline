@@ -1,0 +1,4 @@
+{
+  "binary_onnx": "C:\\Users\\ELCOT\\Downloads\\APISentinel_CSIC_Pipeline\\apisentinel_csic\\outputs\\models\\csic_expert_binary.onnx",
+  "multiclass_onnx": "C:\\Users\\ELCOT\\Downloads\\APISentinel_CSIC_Pipeline\\apisentinel_csic\\outputs\\models\\csic_expert_multiclass.onnx"
+}

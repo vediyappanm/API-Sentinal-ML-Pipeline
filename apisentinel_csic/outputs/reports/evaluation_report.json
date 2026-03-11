@@ -1,0 +1,42 @@
+{
+  "binary": {
+    "threshold": 0.05,
+    "f1": 0.9866666666666666,
+    "precision": 0.9736842105263158,
+    "recall": 1.0,
+    "roc_auc": 0.9999925081006161,
+    "fpr": 0.003465003465003465,
+    "fnr": 0.0,
+    "tp": 185,
+    "fp": 5,
+    "tn": 1438,
+    "fn": 0
+  },
+  "multiclass": {
+    "f1_macro": 1.0,
+    "f1_weighted": 1.0,
+    "logloss": 0.0010856373059959607,
+    "roc_auc": 1.0,
+    "per_class_f1": {
+      "benign": 1.0,
+      "sql_injection": 1.0,
+      "xss": 1.0,
+      "path_traversal": 1.0,
+      "sensitive_file_access": 1.0
+    },
+    "per_class_precision": {
+      "benign": 1.0,
+      "sql_injection": 1.0,
+      "xss": 1.0,
+      "path_traversal": 1.0,
+      "sensitive_file_access": 1.0
+    },
+    "per_class_recall": {
+      "benign": 1.0,
+      "sql_injection": 1.0,
+      "xss": 1.0,
+      "path_traversal": 1.0,
+      "sensitive_file_access": 1.0
+    }
+  }
+}

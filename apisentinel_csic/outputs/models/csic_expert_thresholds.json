@@ -1,0 +1,20 @@
+{
+  "binary": 0.05,
+  "binary_f1": 0.9866666666666667,
+  "multiclass": {
+    "benign": 0.5,
+    "sql_injection": 0.05,
+    "blind_sqli": 0.5,
+    "xss": 0.05,
+    "path_traversal": 0.05,
+    "command_injection": 0.5,
+    "code_injection": 0.5,
+    "ssrf": 0.5,
+    "ldap_injection": 0.5,
+    "scanning_tool": 0.5,
+    "sensitive_file_access": 0.05,
+    "credential_stuffing": 0.5,
+    "api_enumeration": 0.5,
+    "unknown_threat": 0.5
+  }
+}
